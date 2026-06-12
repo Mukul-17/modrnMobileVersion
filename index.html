@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0" />
+    <title>MODRN — Wear The Future</title>
+    <meta name="description" content="Premium oversized essentials, engineered for those who move with purpose. 240 GSM cotton. Made in India." />
+
+    <link rel="icon" href="../Screen1/favicon.ico" sizes="256x256" type="image/x-icon" />
+    <link rel="icon" href="../Screen1/icon.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="../Screen1/icon.png" />
+    <meta name="theme-color" content="#060606" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Fonts: Bebas Neue (display) + Geist / Geist Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- Scroll progress -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- ============================= ANNOUNCEMENT BAR ============================= -->
+    <div class="announce" id="announce">
+      <div class="announce__track">
+        <span>Free shipping over ₹1,499</span><i></i>
+        <span>Drop 03 — now live</span><i></i>
+        <span>7-day easy returns</span><i></i>
+        <span>240 GSM heavyweight cotton</span><i></i>
+        <span>Free shipping over ₹1,499</span><i></i>
+        <span>Drop 03 — now live</span><i></i>
+        <span>7-day easy returns</span><i></i>
+        <span>240 GSM heavyweight cotton</span><i></i>
+      </div>
+    </div>
+
+    <!-- ============================= TOP APP BAR ============================= -->
+    <header id="appbar" class="appbar">
+      <button class="appbar__icon" id="menu-open" aria-label="Open menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="3" x2="21" y1="7" y2="7"/><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="15" y1="17" y2="17"/></svg>
+      </button>
+
+      <a href="#top" class="appbar__logo" aria-label="MODRN">
+        <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="MODRN" />
+      </a>
+
+      <div class="appbar__actions">
+        <button class="appbar__icon" id="search-open" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+        <button class="appbar__icon appbar__bag" id="bag-open" aria-label="Open bag">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="bag-count" id="bag-count" hidden>0</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============================= HERO ============================= -->
+      <section class="hero">
+        <div class="hero__media">
+          <video id="hero-video" autoplay muted loop playsinline preload="auto"
+            poster="https://modrn.in/cdn/shop/files/ChatGPT_Image_Apr_10_2026_02_11_09_PM.png?v=1776075534&width=1200">
+            <source src="https://cdn.shopify.com/videos/c/o/v/7caf3a8202b8481286c09cf06eb0bac8.mp4" type="video/mp4" />
+          </video>
+          <div class="hero__scrim"></div>
+          <div class="hero__grid"></div>
+          <div class="orb hero__orb"></div>
+        </div>
+
+        <div class="hero__inner">
+          <div class="hero__eyebrow reveal">
+            <span class="live-dot"><span class="live-dot__ping"></span><span class="live-dot__core"></span></span>
+            <span>Drop 03 · Now live</span>
+          </div>
+
+          <h1 class="hero__headline">
+            <span class="mask"><span class="mask-inner" style="transition-delay:.08s">WEAR</span></span>
+            <span class="mask"><span class="mask-inner mask-inner--italic" style="transition-delay:.18s">the</span></span>
+            <span class="mask"><span class="mask-inner" style="transition-delay:.28s">FUTURE.</span></span>
+          </h1>
+
+          <p class="hero__sub reveal" style="transition-delay:.42s">
+            Premium oversized essentials, engineered for those who move with purpose. <strong>240 GSM cotton.</strong>
+          </p>
+
+          <div class="hero__cta reveal" style="transition-delay:.5s">
+            <a href="#drop" class="btn btn--primary">
+              <span>Shop the drop</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <button class="btn btn--ghost" id="hero-mute">
+              <svg id="mute-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></svg>
+              <span id="mute-label">Sound</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero__scroll reveal-fade">
+          <span>Scroll</span><i></i>
+        </div>
+      </section>
+
+      <!-- ============================= MARQUEE ============================= -->
+      <section class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span class="marquee__word">Minimal</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--stroke">Bold</span><span class="marquee__dot"></span>
+          <span class="marquee__word">Intentional</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--stroke">Made in India</span><span class="marquee__dot"></span>
+          <span class="marquee__word">Minimal</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--stroke">Bold</span><span class="marquee__dot"></span>
+          <span class="marquee__word">Intentional</span><span class="marquee__dot"></span>
+          <span class="marquee__word marquee__word--stroke">Made in India</span><span class="marquee__dot"></span>
+        </div>
+      </section>
+
+      <!-- ============================= FEATURED DROP (rail) ============================= -->
+      <section id="drop" class="section">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 01 ]</span><span>The Drop</span></div>
+          <h2 class="section__title">FEATURED <span class="t-muted">tees.</span></h2>
+          <p class="section__lead">Eight pieces. Two weights. One philosophy — clean cuts, heavyweight cotton, zero shouting.</p>
+        </div>
+
+        <div class="rail" id="drop-rail" aria-label="Featured products"></div>
+
+        <div class="rail__dots" id="drop-dots" aria-hidden="true"></div>
+      </section>
+
+      <!-- ============================= SPOTLIGHT (hero product) ============================= -->
+      <section class="section spotlight">
+        <div class="spotlight__card reveal" id="spotlight-card"></div>
+      </section>
+
+      <!-- ============================= PRODUCT GRID ============================= -->
+      <section id="shop" class="section">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 02 ]</span><span>The Archive</span></div>
+          <h2 class="section__title">SHOP <span class="t-muted">all.</span></h2>
+        </div>
+        <div class="grid" id="product-grid"></div>
+        <a href="#" class="link-underline reveal" style="margin-top:1.75rem">View all 24 styles
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </section>
+
+      <!-- ============================= MARQUEE 2 ============================= -->
+      <section class="marquee marquee--alt" aria-hidden="true">
+        <div class="marquee__track marquee__track--rev">
+          <span class="marquee__word">Pick your mindset</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word marquee__word--stroke">8 moods</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word">One identity</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word marquee__word--stroke">Yours</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word">Pick your mindset</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word marquee__word--stroke">8 moods</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word">One identity</span><span class="marquee__dot marquee__dot--mono"></span>
+          <span class="marquee__word marquee__word--stroke">Yours</span><span class="marquee__dot marquee__dot--mono"></span>
+        </div>
+      </section>
+
+      <!-- ============================= COLLECTIONS ============================= -->
+      <section id="collections" class="section">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 03 ]</span><span>Collections</span></div>
+          <h2 class="section__title">EVERY TEE IS <span class="t-muted">a mindset.</span></h2>
+          <p class="section__lead">Every drop is built around a feeling. Pick the one that matches your week.</p>
+        </div>
+        <div class="coll-rail" id="coll-rail" aria-label="Collections"></div>
+      </section>
+
+      <!-- ============================= ENGINEERED ============================= -->
+      <section class="section section--lines engineered">
+        <div class="orb engineered__orb"></div>
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 04 ]</span><span>Engineered</span></div>
+          <h2 class="section__title">BUILT TO <span class="t-muted">last.</span></h2>
+          <p class="section__lead">No shortcuts in the build. Every piece is made for people who notice the seams and feel the weight.</p>
+        </div>
+        <div class="features" id="features"></div>
+      </section>
+
+      <!-- ============================= ANATOMY ============================= -->
+      <section id="anatomy" class="section anatomy">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 05 ]</span><span>Why it feels different</span></div>
+          <h2 class="section__title">ANATOMY OF A <span class="t-muted">modrn tee.</span></h2>
+          <p class="section__lead">Keep scrolling — every detail gets inspected.</p>
+        </div>
+
+        <div class="anatomy__pinwrap" id="anatomy-pinwrap">
+          <div class="anatomy__pin">
+            <div class="anatomy__stage">
+              <svg class="tee-svg" viewBox="0 0 520 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram of an oversized tee with construction details">
+                <path class="tee-body" d="M170 90 C195 60 325 60 350 90 L470 150 L440 235 L385 210 L385 500 C385 515 135 515 135 500 L135 210 L80 235 L50 150 Z"/>
+                <path class="tee-body" d="M195 88 C225 122 295 122 325 88" />
+                <path class="tee-stitch" d="M203 96 C228 126 292 126 317 96"/>
+                <path class="tee-stitch" d="M145 495 L375 495"/>
+                <path class="tee-stitch" d="M90 222 L140 200 M430 222 L380 200"/>
+                <text class="tee-emb" x="225" y="320">MODRN</text>
+                <g class="hotspot" data-i="0">
+                  <line class="lead" x1="260" y1="112" x2="260" y2="44"/>
+                  <text class="spot-num" x="260" y="34" text-anchor="middle">01</text>
+                  <circle class="pulse" cx="260" cy="112" r="6"/><circle class="core" cx="260" cy="112" r="6"/>
+                </g>
+                <g class="hotspot" data-i="1">
+                  <line class="lead" x1="438" y1="182" x2="500" y2="146"/>
+                  <text class="spot-num" x="508" y="140" text-anchor="middle">02</text>
+                  <circle class="pulse" cx="438" cy="182" r="6"/><circle class="core" cx="438" cy="182" r="6"/>
+                </g>
+                <g class="hotspot" data-i="2">
+                  <line class="lead" x1="260" y1="312" x2="166" y2="372"/>
+                  <text class="spot-num" x="150" y="380" text-anchor="end">03</text>
+                  <circle class="pulse" cx="260" cy="312" r="6"/><circle class="core" cx="260" cy="312" r="6"/>
+                </g>
+                <g class="hotspot" data-i="3">
+                  <line class="lead" x1="360" y1="495" x2="438" y2="540"/>
+                  <text class="spot-num" x="452" y="550" text-anchor="start">04</text>
+                  <circle class="pulse" cx="360" cy="495" r="6"/><circle class="core" cx="360" cy="495" r="6"/>
+                </g>
+              </svg>
+            </div>
+
+            <div class="anatomy__steps" id="anatomy-steps">
+              <div class="astep on" data-i="0">
+                <span class="astep__num">01 — Collar</span>
+                <h3 class="astep__title">Ribbed neck that won't sag</h3>
+                <div class="astep__copy-wrap"><p class="astep__copy">Double-layered ribbed collar with reinforced stitching — holds its shape on the 50th wear like the first.</p></div>
+              </div>
+              <div class="astep" data-i="1">
+                <span class="astep__num">02 — Shoulder</span>
+                <h3 class="astep__title">True drop-shoulder cut</h3>
+                <div class="astep__copy-wrap"><p class="astep__copy">Pattern-cut for the oversized silhouette — relaxed through the shoulder without looking sloppy.</p></div>
+              </div>
+              <div class="astep" data-i="2">
+                <span class="astep__num">03 — Chest</span>
+                <h3 class="astep__title">Refined embroidery &amp; print</h3>
+                <div class="astep__copy-wrap"><p class="astep__copy">Precision embroidery and high-density prints that survive wash after wash without cracking.</p></div>
+              </div>
+              <div class="astep" data-i="3">
+                <span class="astep__num">04 — Hem</span>
+                <h3 class="astep__title">Double-needle hem</h3>
+                <div class="astep__copy-wrap"><p class="astep__copy">Twin-stitched hem and sleeves for structure at the edges — where cheap tees give up first.</p></div>
+              </div>
+              <div class="anatomy__progress"><i id="anatomy-prog"></i></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= FEEL THE FABRIC ============================= -->
+      <section id="fabric" class="section feel">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 06 ]</span><span>Get closer</span></div>
+          <h2 class="section__title">FEEL THE <span class="t-muted">fabric.</span></h2>
+          <p class="section__lead">Drag across the image to look at the cloth up close — thick, soft, breathable cotton. Tap the small photos to switch.</p>
+        </div>
+
+        <div class="feel__lensbox reveal" id="lensbox">
+          <img id="lensimg" src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_avap0lavap0lavap.jpg?v=1776246119&width=1000" alt="Close-up of MODRN fabric and stitching" loading="lazy" decoding="async" />
+          <div class="feel__lens" id="lens"></div>
+          <div class="feel__hint" id="lens-hint">Drag to zoom ↗</div>
+        </div>
+
+        <div class="feel__thumbs" id="fab-thumbs">
+          <button class="is-active" data-src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_avap0lavap0lavap.jpg?v=1776246119&width=1000" aria-label="Fabric close-up 1"><img src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_avap0lavap0lavap.jpg?v=1776246119&width=200" alt="" loading="lazy" /></button>
+          <button data-src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_2k98gq2k98gq2k98.jpg?v=1776246093&width=1000" aria-label="Fabric close-up 2"><img src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_2k98gq2k98gq2k98.jpg?v=1776246093&width=200" alt="" loading="lazy" /></button>
+          <button data-src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_ak8ygak8ygak8yga.jpg?v=1776246134&width=1000" aria-label="Fabric close-up 3"><img src="https://modrn.in/cdn/shop/files/Gemini_Generated_Image_ak8ygak8ygak8yga.jpg?v=1776246134&width=200" alt="" loading="lazy" /></button>
+        </div>
+
+        <div class="feel__weigh" id="weigh">
+          <div class="feel__weigh-intro reveal">
+            <span class="feel__kicker">The weigh-in</span>
+            <p>GSM = how heavy the cloth is. Heavier cloth feels richer and lasts longer. Most cheap tees are 140 GSM. Ours start at 220.</p>
+          </div>
+          <div class="gsm-row gsm-row--them">
+            <div class="gsm-lbl"><span>Normal t-shirt</span><b><span data-counter data-to="140">0</span> GSM</b></div>
+            <div class="gsm-bar"><i></i></div>
+          </div>
+          <div class="gsm-row gsm-row--us">
+            <div class="gsm-lbl"><span>MODRN t-shirt</span><b><span data-counter data-to="240">0</span> GSM</b></div>
+            <div class="gsm-bar"><i></i></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= STATS ============================= -->
+      <section class="section section--lines stats">
+        <div class="stats__primary reveal">
+          <div class="stats__big"><span data-counter data-to="28">0</span><span class="t-accent">K+</span></div>
+          <div class="stats__cap">Tees shipped across India</div>
+        </div>
+        <div class="stats__row">
+          <div class="reveal stat"><div class="stat__num">4<span class="t-accent">.</span>9</div><div class="stat__lbl">Rating</div></div>
+          <div class="reveal stat"><div class="stat__num"><span data-counter data-to="72">0</span><span class="t-accent">h</span></div><div class="stat__lbl">Avg. delivery</div></div>
+          <div class="reveal stat"><div class="stat__num"><span data-counter data-to="14">0</span><span class="t-accent">+</span></div><div class="stat__lbl">Cities</div></div>
+        </div>
+      </section>
+
+      <!-- ============================= REVIEWS ============================= -->
+      <section class="section reviews">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 07 ]</span><span>Customer voices</span></div>
+          <div class="reviews__rating">
+            <div class="reviews__stars" id="review-stars"></div>
+            <span class="reviews__score">4.9</span>
+            <span class="reviews__count">2,400+ reviews</span>
+          </div>
+        </div>
+        <div class="reviews__viewport">
+          <div class="reviews__track" id="reviews-track"></div>
+        </div>
+        <div class="reviews__dots" id="review-dots" aria-hidden="true"></div>
+      </section>
+
+      <!-- ============================= SOCIAL GALLERY ============================= -->
+      <section id="social" class="section social">
+        <div class="section__head reveal">
+          <div class="eyebrow"><span class="eyebrow__num">[ 08 ]</span><span>#ModrnInTheWild</span></div>
+          <h2 class="section__title">SEEN ON <span class="t-muted">the streets.</span></h2>
+          <a href="https://www.instagram.com/modrnindia" target="_blank" rel="noreferrer" class="social__handle">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>@modrnindia</span>
+          </a>
+        </div>
+        <div class="social-grid" id="social-grid"></div>
+        <div class="social__foot reveal-fade">
+          <a href="https://www.instagram.com/modrnindia" target="_blank" rel="noreferrer" class="btn btn--ghost">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <span>Follow @modrnindia</span>
+          </a>
+          <p class="social__tag">Tag <strong>#ModrnInTheWild</strong> to get featured.</p>
+        </div>
+      </section>
+
+      <!-- ============================= SHOP WITHOUT WORRY (TRUST) ============================= -->
+      <section id="trust" class="trust">
+        <div class="trust__head reveal">
+          <span class="trust__kicker">Why trust us</span>
+          <h2 class="trust__title">SHOP WITHOUT <span class="trust__outline">worry.</span></h2>
+          <p class="trust__lead">We're a new Indian brand, so we don't ask you to trust us blindly. Order today and pay only when the tee reaches your hands. Wrong size? We exchange it. Simple.</p>
+        </div>
+
+        <div class="trust__proof">
+          <div class="trow"><div class="trow__ic">₹</div><div><b>Cash on delivery</b><span>Pay only when the tee is in your hands.</span></div></div>
+          <div class="trow"><div class="trow__ic">⇄</div><div><b>Easy size exchange</b><span>Wrong size? We replace it — no long forms.</span></div></div>
+          <div class="trow"><div class="trow__ic">🔒</div><div><b>Safe payments</b><span>Your card &amp; UPI details are always protected.</span></div></div>
+          <div class="trow"><div class="trow__ic">✉</div><div><b>Real people in support</b><span>Email us — a real person replies fast.</span></div></div>
+        </div>
+
+        <div class="risk" aria-label="Your risk reduces to zero">
+          <span class="risk__lbl">Your risk</span>
+          <div class="risk__track"><i></i></div>
+          <span class="risk__val" id="riskval">100%</span>
+        </div>
+
+        <div class="receipt-wrap">
+          <div class="receipt" aria-label="MODRN trust receipt">
+            <div class="receipt__head">
+              <div class="receipt__logo">MODRN<span>.</span></div>
+              <p>Trust receipt · No. 000-IN</p>
+            </div>
+            <div class="receipt__body">
+              <div class="receipt__line" style="transition-delay:.3s"><span>220–240 GSM cotton</span><span class="receipt__dots"></span><span class="receipt__ok">VERIFIED</span></div>
+              <div class="receipt__line" style="transition-delay:.45s"><span>Made in India</span><span class="receipt__dots"></span><span class="receipt__ok">VERIFIED</span></div>
+              <div class="receipt__line" style="transition-delay:.6s"><span>Cash on delivery</span><span class="receipt__dots"></span><span class="receipt__ok">AVAILABLE</span></div>
+              <div class="receipt__line" style="transition-delay:.75s"><span>Free shipping (India)</span><span class="receipt__dots"></span><span class="receipt__ok">INCLUDED</span></div>
+              <div class="receipt__line" style="transition-delay:.9s"><span>Returns &amp; exchange</span><span class="receipt__dots"></span><span class="receipt__ok">COVERED</span></div>
+              <div class="receipt__line" style="transition-delay:1.05s"><span>Hidden charges</span><span class="receipt__dots"></span><span class="receipt__ok">₹0.00</span></div>
+              <div class="receipt__total"><span>Your risk</span><span>₹0.00</span></div>
+            </div>
+            <div class="receipt__foot">
+              Thank you for supporting an Indian brand
+              <div class="receipt__barcode" aria-hidden="true"></div>
+            </div>
+            <div class="receipt__stamp">MODRN<br>★ Verified ★<br>Promise</div>
+          </div>
+        </div>
+
+        <div class="pay-strip" aria-hidden="true">
+          <div class="pay-track">
+            <span>Pay your way —</span><span><b>UPI</b></span><span><b>Visa</b></span><span><b>Mastercard</b></span><span><b>RuPay</b></span><span><b>Net Banking</b></span><span><b>Cash on Delivery</b></span><span><b>Wallets</b></span>
+            <span>Pay your way —</span><span><b>UPI</b></span><span><b>Visa</b></span><span><b>Mastercard</b></span><span><b>RuPay</b></span><span><b>Net Banking</b></span><span><b>Cash on Delivery</b></span><span><b>Wallets</b></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= NEWSLETTER ============================= -->
+      <section class="section section--lines newsletter">
+        <div class="orb newsletter__orb"></div>
+        <div class="newsletter__inner">
+          <div class="eyebrow reveal"><span class="eyebrow__num">[ 10 ]</span><span>Early access</span></div>
+          <h2 class="newsletter__title reveal">JOIN THE <span class="t-muted">drop list.</span></h2>
+          <p class="newsletter__lead reveal">10% off your first order. Be first when new drops go live. No spam — only fire.</p>
+          <form class="newsletter__form reveal" id="newsletter-form">
+            <input id="newsletter-email" type="email" required placeholder="you@email.com" autocomplete="email" />
+            <button type="submit" aria-label="Join">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </form>
+          <div class="newsletter__msg" id="newsletter-msg" aria-live="polite"></div>
+          <div class="newsletter__trust reveal">
+            <span>10% off first order</span><i></i>
+            <span>First on new drops</span><i></i>
+            <span>Zero spam</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================= FOOTER ============================= -->
+      <footer class="footer">
+        <div class="footer__brand">
+          <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="MODRN" />
+          <p>Minimal. Bold. Intentional. Premium oversized essentials made in India for those who move with purpose.</p>
+          <div class="footer__social">
+            <a href="https://www.instagram.com/modrnindia" target="_blank" rel="noreferrer" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://www.facebook.com/modrnindia" target="_blank" rel="noreferrer" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.9h2.54V9.85c0-2.52 1.5-3.91 3.78-3.91 1.1 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.45 2.9h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94Z"/></svg></a>
+            <a href="mailto:modrnindia@gmail.com" aria-label="Email"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
+          </div>
+        </div>
+        <div class="footer__links">
+          <div class="footer__col">
+            <div class="footer__col-title">Shop</div>
+            <a href="#drop">New Drops</a><a href="#shop">Best Sellers</a><a href="#shop">220 GSM</a><a href="#shop">240 GSM</a>
+          </div>
+          <div class="footer__col">
+            <div class="footer__col-title">Help</div>
+            <a href="#">Size Guide</a><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Contact</a>
+          </div>
+        </div>
+        <div class="footer__bottom">
+          <span>© <span id="year"></span> MODRN India</span>
+          <span class="footer__bottom-links"><a href="#">Terms</a><a href="#">Privacy</a></span>
+        </div>
+      </footer>
+
+      <div class="tabbar-spacer" aria-hidden="true"></div>
+    </main>
+
+    <!-- ============================= BOTTOM TAB BAR ============================= -->
+    <nav class="tabbar" id="tabbar" aria-label="Primary">
+      <a href="#top" class="tab is-active" data-tab="top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="#drop" class="tab" data-tab="drop">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <span>Shop</span>
+      </a>
+      <button class="tab" data-tab="search" id="search-open-tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>Search</span>
+      </button>
+      <button class="tab tab--bag" data-tab="bag" id="bag-open-tab">
+        <span class="tab__bagwrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="bag-count tab__count" id="tab-bag-count" hidden>0</span>
+        </span>
+        <span>Bag</span>
+      </button>
+    </nav>
+
+    <!-- ============================= SLIDE MENU ============================= -->
+    <div class="sheet-root" id="menu-sheet" hidden>
+      <div class="sheet__backdrop" data-close></div>
+      <aside class="drawer" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="drawer__head">
+          <img src="https://modrn.in/cdn/shop/files/image.png?v=1774360540&width=360" alt="MODRN" class="drawer__logo" />
+          <button class="icon-close" data-close aria-label="Close menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <nav class="drawer__nav">
+          <a href="#drop" data-close><span>Shop the Drop</span><span class="drawer__idx">01</span></a>
+          <a href="#shop" data-close><span>The Archive</span><span class="drawer__idx">02</span></a>
+          <a href="#collections" data-close><span>Collections</span><span class="drawer__idx">03</span></a>
+          <a href="#" data-close><span>Size Guide</span><span class="drawer__idx">04</span></a>
+          <a href="#" data-close><span>Our Story</span><span class="drawer__idx">05</span></a>
+        </nav>
+        <div class="drawer__foot">
+          <div class="drawer__foot-row"><span>Free shipping over</span><strong>₹1,499</strong></div>
+          <div class="drawer__foot-row"><span>Support</span><strong>modrnindia@gmail.com</strong></div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ============================= SEARCH SHEET ============================= -->
+    <div class="sheet-root sheet-root--top" id="search-sheet" hidden>
+      <div class="sheet__backdrop" data-close></div>
+      <div class="search" role="dialog" aria-modal="true" aria-label="Search">
+        <div class="search__bar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="search" id="search-input" placeholder="Search tees, collections…" autocomplete="off" />
+          <button class="icon-close" data-close aria-label="Close search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="search__suggest">
+          <span class="search__label">Popular</span>
+          <div class="search__chips">
+            <button class="chip" data-search="oversized">Oversized</button>
+            <button class="chip" data-search="240">240 GSM</button>
+            <button class="chip" data-search="coffee">Coffee</button>
+            <button class="chip" data-search="roads">Who Needs Roads</button>
+          </div>
+        </div>
+        <div class="search__results" id="search-results"></div>
+      </div>
+    </div>
+
+    <!-- ============================= PRODUCT BOTTOM SHEET ============================= -->
+    <div class="sheet-root" id="product-sheet" hidden>
+      <div class="sheet__backdrop" data-close></div>
+      <div class="sheet" role="dialog" aria-modal="true" aria-label="Product details">
+        <div class="sheet__grip" data-grip></div>
+        <div class="sheet__scroll" id="product-sheet-body"></div>
+      </div>
+    </div>
+
+    <!-- ============================= CART BOTTOM SHEET ============================= -->
+    <div class="sheet-root" id="cart-sheet" hidden>
+      <div class="sheet__backdrop" data-close></div>
+      <div class="sheet sheet--cart" role="dialog" aria-modal="true" aria-label="Your bag">
+        <div class="sheet__grip" data-grip></div>
+        <div class="cart__head">
+          <h3>Your bag <span id="cart-head-count">(0)</span></h3>
+          <button class="icon-close" data-close aria-label="Close bag">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+        <div class="cart__ship" id="cart-ship">
+          <div class="cart__ship-text" id="cart-ship-text"></div>
+          <div class="cart__ship-bar"><i id="cart-ship-fill"></i></div>
+        </div>
+        <div class="cart__items" id="cart-items"></div>
+        <div class="cart__foot" id="cart-foot">
+          <div class="cart__subtotal">
+            <span>Subtotal</span>
+            <strong id="cart-subtotal">₹0</strong>
+          </div>
+          <button class="btn btn--primary btn--block" id="checkout-btn">
+            <span>Checkout</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+          <p class="cart__note">Taxes &amp; shipping calculated at checkout</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= TOAST ============================= -->
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
