@@ -39,10 +39,10 @@ const collections = [
 ];
 
 const reviews = [
-  { quote: "The 240 GSM is no joke. Heaviest tee in my wardrobe. Cut is perfect — oversized but still clean.", name: "Aarav S.", city: "Bangalore", piece: "Built To Burn Fuel" },
-  { quote: "Finally a brand that gets minimal right. Not boring — confident. Wearing 'Focus' on repeat.", name: "Ishita K.", city: "Mumbai", piece: "Focus" },
-  { quote: "I've spent ₹3k on tees that feel cheaper than this ₹599 one. MODRN is doing something right.", name: "Tanvi R.", city: "Pune", piece: "Unstoppable" },
-  { quote: "Packaging felt like unboxing a phone. Fit is exactly what was shown. Already ordered two more.", name: "Rohan M.", city: "Delhi", piece: "Who Needs Roads" },
+  { quote: "The 240 GSM is no joke. Heaviest tee in my wardrobe. Cut is perfect — oversized but still clean.", name: "Aarav S.", city: "Bangalore", piece: "Built To Burn Fuel", rating: 5, time: "2 weeks ago" },
+  { quote: "Finally a brand that gets minimal right. Not boring — confident. Wearing 'Focus' on repeat.", name: "Ishita K.", city: "Mumbai", piece: "Focus", rating: 5, time: "1 month ago" },
+  { quote: "I've spent ₹3k on tees that feel cheaper than this ₹599 one. MODRN is doing something right.", name: "Tanvi R.", city: "Pune", piece: "Unstoppable", rating: 5, time: "3 weeks ago" },
+  { quote: "Packaging felt like unboxing a phone. Fit is exactly what was shown. Already ordered two more.", name: "Rohan M.", city: "Delhi", piece: "Who Needs Roads", rating: 4, time: "1 week ago" },
 ];
 
 const features = [
@@ -105,7 +105,7 @@ function cardHTML(p) {
    ========================================================= */
 function renderRail() {
   const rail = $("#drop-rail");
-  const featured = products.slice(1);
+  const featured = products; // show all products in the rail (grid section removed)
   rail.innerHTML = featured.map(cardHTML).join("");
 
   const dots = $("#drop-dots");
@@ -135,18 +135,26 @@ function renderGrid() {
 }
 
 function renderCollections() {
-  $("#coll-rail").innerHTML = collections.map((c) => `
-    <a class="ccard reveal" href="#shop">
-      <img class="ccard__img" src="${c.image}" alt="${c.name}" loading="lazy" decoding="async" />
-      <div class="ccard__grad"></div>
-      <span class="ccard__num">${c.num}</span>
-      <div class="ccard__body">
-        <div class="ccard__label">Collection</div>
-        <h3 class="ccard__name">${c.name}</h3>
-        <div class="ccard__tag">"${c.tag}"</div>
-        <span class="ccard__cta">Explore ${ICON.arrow}</span>
+  const [hero, ...rest] = collections;
+  const card = (c, isHero) => `
+    <a class="cbento ${isHero ? "cbento--hero" : ""}" href="#drop" style="background-image:url('${c.image}')">
+      <span class="cbento__num">${c.num}</span>
+      <div class="cbento__body">
+        ${isHero ? `<div class="cbento__label">Hero mindset</div>` : ""}
+        <h3 class="cbento__name">${c.name}</h3>
+        ${isHero ? `<p class="cbento__tag">"${c.tag}"</p><span class="cbento__cta">Explore the drop ${ICON.arrow}</span>` : ""}
       </div>
-    </a>`).join("");
+    </a>`;
+  $("#coll-rail").innerHTML =
+    card(hero, true) +
+    rest.map((c) => card(c, false)).join("") +
+    `<a class="cbento cbento--explore" href="#drop">
+      <div class="cbento__ex-top">+ all mindsets</div>
+      <div>
+        <div class="cbento__ex-big">EXPLORE THE<br><span class="t-muted">full archive</span></div>
+        <div class="cbento__ex-shop">Shop all ${ICON.arrow}</div>
+      </div>
+    </a>`;
 }
 
 function renderFeatures() {
@@ -183,17 +191,21 @@ function renderSocial() {
 function renderReviews() {
   $("#review-stars").innerHTML = Array(5).fill(ICON.star).join("");
   const track = $("#reviews-track");
+  const initials = (n) => n.split(" ").map((w) => w[0]).join("").slice(0, 2);
+  const starRow = (n) => "★".repeat(n) + `<span class="empty">${"☆".repeat(5 - n)}</span>`;
   track.innerHTML = reviews.map((r) => `
     <div class="review">
-      <div class="review__quote-mark">"</div>
-      <p class="review__quote">${r.quote}</p>
-      <div class="review__author">
-        <div class="review__avatar">${r.name[0]}</div>
-        <div>
-          <div class="review__name">${r.name}</div>
-          <div class="review__meta">${r.city} · Wore ${r.piece}</div>
+      <div class="review__top">
+        <div class="review__avatar">${initials(r.name)}</div>
+        <div class="review__who">
+          <b>${r.name}</b>
+          <span>${r.city} · ${r.time}</span>
         </div>
+        <span class="review__vfy">✓ Verified buyer</span>
       </div>
+      <div class="review__stars" aria-label="${r.rating} out of 5 stars">${starRow(r.rating)}</div>
+      <p class="review__quote">"${r.quote}"</p>
+      <span class="review__bought"><i></i>Bought: ${r.piece}</span>
     </div>`).join("");
 
   const dots = $("#review-dots");
@@ -703,41 +715,66 @@ function initChrome() {
   onScroll();
 }
 
-/* Pause the hero video when it scrolls off-screen — stops it decoding frames
-   in the background, which is a big cause of scroll jank on Android. */
-function initHeroVideo() {
-  const v = $("#hero-video");
-  if (!v) return;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) v.play().catch(() => {});
-      else v.pause();
-    });
-  }, { threshold: 0.15 });
-  io.observe(v);
-}
-
 /* =========================================================
-   Hero mute toggle
+   Hero — 6-slide story slider (auto-advance, progress, swipe, tap, arrows)
    ========================================================= */
-function bindHeroMute() {
-  const btn = $("#hero-mute");
-  const video = $("#hero-video");
-  const label = $("#mute-label");
-  const icon = $("#mute-icon");
-  btn.addEventListener("click", () => {
-    video.muted = !video.muted;
-    if (!video.muted) {
-      video.play().catch(() => {});
-      btn.classList.add("is-on");
-      label.textContent = "On";
-      icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>';
-    } else {
-      btn.classList.remove("is-on");
-      label.textContent = "Sound";
-      icon.innerHTML = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/>';
-    }
+function initSlider() {
+  const slider = $("#bnSlider");
+  if (!slider) return;
+  const slides = $$(".slide", slider);
+  const segs = $$(".seg", slider);
+  const vids = $$("video", slider);
+  let i = 0, t0 = performance.now(), paused = false, elapsed = 0;
+  let DUR = +slides[0].dataset.dur || 6500;
+
+  function go(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, j) => s.classList.toggle("on", j === i));
+    segs.forEach((sg, j) => { sg.classList.toggle("done", j < i); sg.querySelector("i").style.width = "0%"; });
+    DUR = +slides[i].dataset.dur || 6500;
+    t0 = performance.now(); elapsed = 0;
+    vids.forEach((v) => { v.closest(".slide").classList.contains("on") ? v.play().catch(() => {}) : v.pause(); });
+  }
+
+  $("#bnNext").addEventListener("click", () => { go(i + 1); haptic(); });
+  $("#bnPrev").addEventListener("click", () => { go(i - 1); haptic(); });
+  $("#bnTapR").addEventListener("click", () => go(i + 1));
+  $("#bnTapL").addEventListener("click", () => go(i - 1));
+
+  // hold-to-pause on the tap zones (touch)
+  let hold;
+  ["bnTapL", "bnTapR"].forEach((id) => {
+    const el = $("#" + id);
+    el.addEventListener("touchstart", () => { hold = setTimeout(() => (paused = true), 220); }, { passive: true });
+    el.addEventListener("touchend", () => { clearTimeout(hold); if (paused) { paused = false; t0 = performance.now() - elapsed; } }, { passive: true });
   });
+  slider.addEventListener("mouseenter", () => (paused = true));
+  slider.addEventListener("mouseleave", () => { paused = false; t0 = performance.now() - elapsed; });
+
+  // pause the whole loop when the hero is scrolled off-screen (saves battery)
+  let visible = true;
+  new IntersectionObserver((es) => { visible = es[0].isIntersecting; if (visible) t0 = performance.now() - elapsed; }, { threshold: 0.05 }).observe(slider);
+
+  (function loop(t) {
+    if (!paused && visible) {
+      elapsed = t - t0;
+      segs[i].querySelector("i").style.width = Math.min((elapsed / DUR) * 100, 100) + "%";
+      if (elapsed >= DUR) go(i + 1);
+    }
+    requestAnimationFrame(loop);
+  })(performance.now());
+
+  // swipe
+  let sx = null, sy = null;
+  slider.addEventListener("touchstart", (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  slider.addEventListener("touchend", (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) go(i + (dx < 0 ? 1 : -1));
+    sx = sy = null;
+  }, { passive: true });
+
+  go(0);
 }
 
 /* =========================================================
@@ -746,34 +783,48 @@ function bindHeroMute() {
 function initAnatomy() {
   const sec = $("#anatomy");
   if (!sec) return;
-  const pinwrap = $("#anatomy-pinwrap");
-  const steps = $$(".astep", sec);
+  const diagram = $(".anatomy__diagram", sec);
   const spots = $$(".hotspot", sec);
-  const prog = $("#anatomy-prog");
-  const n = steps.length || 1;
+  const steps = $$(".astep", sec);
 
-  // draw the tee the first time the section enters
-  const drawIO = new IntersectionObserver((es, o) => {
-    es.forEach((e) => { if (e.isIntersecting) { sec.classList.add("is-drawn"); o.disconnect(); } });
-  }, { threshold: 0.15 });
-  drawIO.observe(sec);
+  // Draw the tee outline once when the diagram first scrolls in (resetting the
+  // line-draw on every scroll would look glitchy).
+  const io = new IntersectionObserver((es, o) => {
+    es.forEach((e) => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      sec.classList.add("is-drawn");
+    });
+  }, { threshold: 0.2 });
+  io.observe(diagram || sec);
 
-  // scroll-scrub: active step expands, hotspots accumulate, progress fills
-  let last = -1, raf = null;
+  // Hotspots are driven by scroll position: as the section travels up through
+  // the viewport, points light 01->04; scrolling back up clears them again.
+  let activeCount = -1;
   const update = () => {
-    raf = null;
-    const r = pinwrap.getBoundingClientRect();
-    const total = r.height - window.innerHeight;
-    const p = total > 0 ? Math.min(Math.max(-r.top / total, 0), 1) : 0;
-    if (prog) prog.style.transform = `scaleX(${p})`;
-    const idx = Math.min(Math.floor(p * n), n - 1);
-    if (idx !== last) {
-      last = idx;
-      steps.forEach((s) => s.classList.toggle("on", +s.dataset.i === idx));
-      spots.forEach((s) => s.classList.toggle("current", +s.dataset.i === idx));
-    }
+    const r = sec.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    // progress 0 -> 1 as the section scrolls from entering to leaving the view
+    const span = r.height + vh * 0.5;
+    const travelled = vh * 0.85 - r.top;
+    const p = Math.max(0, Math.min(travelled / span, 1));
+    const count = Math.round(p * spots.length); // 0..spots.length
+    if (count === activeCount) return;
+    activeCount = count;
+    spots.forEach((s, i) => {
+      const on = i < count;
+      s.classList.toggle("on", on);
+      s.classList.toggle("current", on && i === count - 1);
+    });
+    steps.forEach((st, i) => st.classList.toggle("is-active", i < count));
   };
-  const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+
+  let ticking = false;
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => { update(); ticking = false; });
+  };
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll, { passive: true });
   update();
@@ -875,10 +926,7 @@ function initTrust() {
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   renderRail();
-  renderSpotlight();
-  renderGrid();
   renderCollections();
-  renderFeatures();
   renderSocial();
   renderReviews();
 
@@ -887,13 +935,12 @@ document.addEventListener("DOMContentLoaded", () => {
   bindCart();
   bindSearch();
   bindNewsletter();
-  bindHeroMute();
 
   initReveals();
   initCounters();
   initReviewAuto();
   initChrome();
-  initHeroVideo();
+  initSlider();
   initAnatomy();
   initFabric();
   initTrust();
