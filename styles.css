@@ -193,7 +193,7 @@ body.scrolled-past .appbar { top: 0; }
 }
 .appbar__icon:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.06); }
 .appbar__logo img {
-  height: 22px; width: auto; object-fit: contain;
+  height: 30px; width: auto; object-fit: contain;
   filter: brightness(0) invert(1);
 }
 .appbar__actions { display: flex; align-items: center; gap: 0.1rem; }
@@ -577,6 +577,30 @@ body.scrolled-past .appbar { top: 0; }
 .rail__dot { width: 6px; height: 6px; border-radius: 9999px; background: rgba(255,255,255,0.2); transition: width 0.3s var(--ease), background 0.3s; }
 .rail__dot.is-active { width: 22px; background: var(--accent); }
 
+/* "more to scroll" affordance — edge fade + swipe hint pill */
+.rail-wrap { position: relative; }
+.rail-wrap::after {
+  content: ""; position: absolute; top: 0; right: 0; bottom: 0.5rem; width: 56px;
+  pointer-events: none; z-index: 2;
+  background: linear-gradient(to right, rgba(6,6,6,0), var(--bg));
+  opacity: 1; transition: opacity 0.4s var(--ease);
+}
+.rail-wrap.is-ended::after { opacity: 0; }
+/* tappable chevron — sits over the right edge, bobs to invite a swipe */
+.rail-arrow {
+  position: absolute; top: 36%; right: 0.55rem; z-index: 4;
+  height: 46px; width: 46px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: #000;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  animation: railBob 1.5s var(--ease) infinite;
+  transition: opacity 0.4s var(--ease), transform 0.18s var(--ease);
+}
+.rail-arrow:active { transform: scale(0.86); }
+.rail-wrap.is-ended .rail-arrow { opacity: 0; pointer-events: none; transform: scale(0.7); }
+@keyframes railBob { 0%,100% { transform: translateX(0); } 50% { transform: translateX(-6px); } }
+@media (prefers-reduced-motion: reduce) { .rail-arrow { animation: none; } }
+
 /* Product card */
 .pcard {
   flex: 0 0 70%;
@@ -642,6 +666,21 @@ body.scrolled-past .appbar { top: 0; }
 .pcard__price { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 0.5rem; }
 .pcard__price b { font-size: var(--fs-body); font-weight: 600; color: #fff; }
 .pcard__price s { font-size: 12px; color: var(--faint); }
+
+/* rank medallion (bestsellers) */
+.pcard__rank {
+  position: absolute; top: 0; left: 0; z-index: 3;
+  min-width: 34px; height: 30px; padding: 0 0.45rem;
+  display: grid; place-items: center;
+  background: var(--accent); color: #000;
+  font-family: var(--display); font-size: 14px; line-height: 1;
+  border-top-left-radius: var(--radius); border-bottom-right-radius: 14px;
+}
+
+/* Bestsellers grid (2-up mobile, scales up) */
+.pgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem 0.8rem; padding: 0 var(--pad); }
+.pgrid .pcard { max-width: none; flex: initial; }
+@media (min-width: 720px) { .pgrid { grid-template-columns: repeat(4, 1fr); gap: 1.6rem 1rem; } }
 
 /* =========================================================
    Spotlight (full-bleed hero product)

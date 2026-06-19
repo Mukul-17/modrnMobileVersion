@@ -79,15 +79,19 @@ const cartSubtotal = () => cart.reduce((n, i) => n + i.price * i.qty, 0);
 /* =========================================================
    Card markup
    ========================================================= */
-function cardHTML(p) {
+function cardHTML(p, rank) {
   const disc = discountOf(p);
   const wished = wishlist.includes(p.id) ? "is-wished" : "";
+  // when a rank is given (bestsellers) the medallion replaces the corner badge
+  const corner = rank
+    ? `<span class="pcard__rank">${rank}</span>`
+    : (p.badge ? `<span class="pcard__badge">${p.badge}</span>` : "");
   return `
   <article class="pcard reveal" data-card="${p.id}">
     <div class="pcard__media" data-open="${p.id}">
       <img class="pcard__img pcard__img--main" src="${p.primary}" alt="${p.name}" loading="lazy" decoding="async" />
       <img class="pcard__img pcard__img--alt" src="${p.secondary}" alt="" loading="lazy" decoding="async" />
-      ${p.badge ? `<span class="pcard__badge">${p.badge}</span>` : ""}
+      ${corner}
       ${disc > 0 ? `<span class="pcard__disc">−${disc}%</span>` : ""}
       <button class="pcard__wish ${wished}" data-wish="${p.id}" aria-label="Add to wishlist">${ICON.heart}</button>
       <button class="pcard__add" data-open="${p.id}" aria-label="View ${p.name}">${ICON.plus}</button>
@@ -106,11 +110,70 @@ function cardHTML(p) {
 function renderRail() {
   const rail = $("#drop-rail");
   const featured = products; // show all products in the rail (grid section removed)
-  rail.innerHTML = featured.map(cardHTML).join("");
+  rail.innerHTML = featured.map((p) => cardHTML(p)).join("");
 
   const dots = $("#drop-dots");
   dots.innerHTML = featured.map((_, i) => `<span class="rail__dot ${i === 0 ? "is-active" : ""}"></span>`).join("");
   bindRailDots(rail, dots);
+  initRailHint(rail);
+}
+
+// Bestsellers — curated, ranked grid under the featured rail
+const BESTSELLER_IDS = ["burn-fuel", "focus", "who-needs-roads", "unstoppable"];
+function renderBestsellers() {
+  const grid = $("#best-grid");
+  if (!grid) return;
+  const list = BESTSELLER_IDS.map(productById).filter(Boolean);
+  grid.innerHTML = list.map((p, i) => cardHTML(p, i + 1)).join("");
+}
+
+// Swipe affordance: nudge the rail once on entry, fade the hint after first
+// scroll, and drop the edge gradient when the user reaches the end.
+function initRailHint(rail) {
+  const wrap = rail.closest(".rail-wrap");
+  if (!wrap) return;
+  const maxScroll = () => rail.scrollWidth - rail.clientWidth;
+
+  let raf;
+  rail.addEventListener("scroll", () => {
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = null;
+      if (rail.scrollLeft > 8) wrap.classList.add("is-scrolled");
+      wrap.classList.toggle("is-ended", rail.scrollLeft >= maxScroll() - 4);
+    });
+  }, { passive: true });
+
+  // tap the arrow to advance roughly one card
+  const arrow = $(".rail-arrow", wrap);
+  if (arrow) {
+    arrow.addEventListener("click", () => {
+      const card = rail.querySelector(".pcard");
+      const gap = parseFloat(getComputedStyle(rail).columnGap || "14") || 14;
+      const step = card ? card.offsetWidth + gap : rail.clientWidth * 0.72;
+      const next = rail.scrollLeft + step;
+      rail.scrollTo({ left: next >= maxScroll() - 4 ? maxScroll() : next, behavior: "smooth" });
+      haptic();
+    });
+  }
+
+  // gentle one-time nudge when the rail scrolls into view (signals it scrolls)
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+  const io = new IntersectionObserver((es, o) => {
+    es.forEach((e) => {
+      if (!e.isIntersecting || wrap.classList.contains("is-scrolled")) return;
+      o.disconnect();
+      setTimeout(() => {
+        if (wrap.classList.contains("is-scrolled")) return;
+        rail.scrollTo({ left: 34, behavior: "smooth" });
+        setTimeout(() => {
+          if (!wrap.classList.contains("is-scrolled")) rail.scrollTo({ left: 0, behavior: "smooth" });
+        }, 600);
+      }, 650);
+    });
+  }, { threshold: 0.4 });
+  io.observe(wrap);
 }
 
 function renderSpotlight() {
@@ -131,7 +194,7 @@ function renderSpotlight() {
 }
 
 function renderGrid() {
-  $("#product-grid").innerHTML = products.map(cardHTML).join("");
+  $("#product-grid").innerHTML = products.map((p) => cardHTML(p)).join("");
 }
 
 function renderCollections() {
@@ -926,6 +989,7 @@ function initTrust() {
    ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
   renderRail();
+  renderBestsellers();
   renderCollections();
   renderSocial();
   renderReviews();
